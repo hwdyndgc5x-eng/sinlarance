@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SINLARANCE CLUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. ОБЩИЕ СТИЛИ */
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { margin: 0; background: #fff; color: #000; overflow-x: hidden; }
+
+    /* 2. ШАПКА (Рассеивающая) */
+    .header {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 75px;
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 0 40px; z-index: 9999;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .logo { display: flex; align-items: center; height: 100%; }
+    .logo img { max-height: 55px; width: auto; display: block; object-fit: contain; }
+
+    .header-btn {
+      display: inline-block;
+      padding: 10px 22px; background: #000; color: #fff;
+      text-decoration: none; font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px;
+      transition: 0.3s;
+    }
+    .header-btn:hover { background: #333; }
+
+    /* 3. АНИМАЦИИ (APPLE STYLE) */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 4. HERO ВИДЕО */
+    .hero {
+      position: relative;
+      width: 100%; height: 75vh;
+      overflow: hidden; background: #000; margin-top: 75px;
+    }
+    .hero video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* 5. ТОВАРЫ */
+    .wrapper { max-width: 1100px; margin: 0 auto; padding: 80px 20px; }
+    .product { 
+      display: flex; align-items: center; justify-content: space-between; 
+      gap: 60px; margin-bottom: 120px; 
+    }
+
+    .slider {
+      width: 48%; position: relative; height: 550px; 
+      overflow: hidden; background-color: #fcfcfc;
+    }
+    .slider img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: none; position: absolute; top: 0; left: 0;
+    }
+    .slider img.active { display: block; animation: fade 0.8s; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+    .product-info { width: 45%; }
+    .product-info h1 { font-size: 26px; margin-bottom: 5px; font-weight: 700; }
+    .product-info h2 { 
+      font-family: 'Courier New', monospace; font-size: 13px; color: #888; 
+      margin-bottom: 25px; font-weight: 700; text-transform: uppercase;
+    }
+    
+    .description { 
+      font-family: 'Courier New', monospace; line-height: 1.6; 
+      margin-bottom: 30px; font-size: 14px; color: #333; 
+    }
+    
+    .price { margin-bottom: 30px; }
+    .old-price { text-decoration: line-through; color: #aaa; font-size: 16px; margin-right: 10px; }
+    .new-price { font-size: 24px; font-weight: 700; }
+    
+    .btn {
+      display: inline-block; width: 100%; max-width: 300px; padding: 18px;
+      background: #000; color: #fff; text-align: center; text-decoration: none;
+      font-size: 13px; font-weight: 700; letter-spacing: 1px;
+      transition: 0.3s; text-transform: uppercase;
+    }
+    .btn:hover { background: #333; }
+    .btn:active { transform: scale(0.98); }
+
+    /* 6. ФУТЕР (FAQ + О НАС) */
+    .site-footer { background-color: #000; color: #fff; padding: 80px 20px 40px; width: 100%; }
+    .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
+    
+    .footer-sections { display: flex; gap: 80px; margin-bottom: 60px; }
+    .footer-column { display: flex; flex-direction: column; gap: 15px; }
+    .footer-column a { 
+      color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; 
+      letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s;
+    }
+    .footer-column a:hover { opacity: 0.5; }
+
+    .footer-copy { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 2px; }
+
+    /* МОБИЛЬНАЯ ВЕРСИЯ */
+    @media (max-width: 768px) {
+      .header { padding: 0 20px; height: 65px; }
+      .logo img { max-height: 40px; }
+      .hero { height: 60vh; margin-top: 65px; }
+      .product { flex-direction: column; gap: 40px; }
+      .slider { width: 100%; height: 400px; }
+      .product-info { width: 100%; }
+      .footer-sections { flex-direction: column; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <img src="imglogo.png" alt="Sinlarance">
+    </div>
+    <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn" target="_blank">ЗАКАЗАТЬ</a>
+  </header>
+
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="promo.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <div class="wrapper">
+    
+    <div class="product animate-on-scroll">
+      <div class="slider">
+        <img src="zip1.jpg" class="active">
+        <img src="zip2.jpg">
+        <img src="zip3.jpg">
+      </div>
+      <div class="product-info">
+        <h1>OLIVE GREEN ZIP HOODIE</h1>
+        <h2>DROP "SINLARANCE CLUB"</h2>
+        <div class="description">
+          100% хлопок<br>
+          Boxy cropped fit<br>
+          Раглан-крой обеспечивает свободу движений и мягкую посадку по плечам.
+        </div>
+        <div class="price">
+          <span class="old-price">25 900 ₸</span>
+          <span class="new-price">20 830 ₸</span>
+        </div>
+        <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917&text=Хочу%20заказать%20Green%20Zip%20Hoodie" target="_blank">НАПИСАТЬ В WHATSAPP</a>
+      </div>
+    </div>
+
+    <div class="product animate-on-scroll">
+      <div class="slider">
+        <img src="long1.jpg" class="active">
+        <img src="long2.jpg">
+        <img src="long3.jpg">
+      </div>
+      <div class="product-info">
+        <h1>BLACK OVERSIZE TEE</h1>
+        <h2>DROP "SINLARANCE CLUB"</h2>
+        <div class="description">
+          Heavy cotton | Relaxed fit<br>
+          Премиальное качество материала.<br>
+          Плотная ткань, сохраняющая форму.
+        </div>
+        <div class="price">
+          <span class="old-price">15 000 ₸</span>
+          <span class="new-price">12 000 ₸</span>
+        </div>
+        <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917&text=Хочу%20заказать%20Black%20Oversize%20Tee" target="_blank">НАПИСАТЬ В WHATSAPP</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-sections">
+        <div class="footer-column">
+          <a href="faq.html">FAQ</a>
+          <a href="about.html">О НАС</a>
+        </div>
+        <div class="footer-column">
+          <a href="https://instagram.com/" target="_blank">INSTAGRAM</a>
+          <a href="https://tiktok.com/" target="_blank">TIKTOK</a>
+        </div>
+      </div>
+      <div class="footer-copy">© 2026, SINLARANCE POWERED BY HEADCHACE</div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Слайдеры
+    const allSliders = document.querySelectorAll('.slider');
+    allSliders.forEach((slider) => {
+      const images = slider.querySelectorAll('img');
+      if (images.length <= 1) return;
+      let currentIndex = 0;
+      setInterval(() => {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.add('active');
+      }, 3500);
+    });
+
+    // 2. Анимация появления (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
