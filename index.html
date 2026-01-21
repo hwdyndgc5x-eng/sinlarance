@@ -2,30 +2,41 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SINLARANCE CLUB</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* 1. ОБЩИЕ СТИЛИ */
-    * { box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { margin: 0; background: #fff; color: #000; overflow-x: hidden; }
+    /* 1. БАЗОВЫЕ НАСТРОЙКИ (Убираем дерганье) */
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { 
+      width: 100%; 
+      overflow-x: hidden; 
+      background: #fff; 
+      color: #000; 
+      /* Улучшаем плавность скролла на iOS */
+      -webkit-overflow-scrolling: touch; 
+    }
 
-    /* 2. ИСПРАВЛЕННАЯ ШАПКА (Намертво зафиксирована) */
+    /* 2. HEADER: Прозрачный -> Белый */
     .header {
       position: fixed;
-      top: 0; left: 0; right: 0; /* Растягиваем по всей ширине */
+      top: 0; left: 0; right: 0;
       height: 75px;
       display: flex; align-items: center; justify-content: space-between; 
-      padding: 0 40px; z-index: 10000; /* Самый высокий приоритет */
+      padding: 0 40px; z-index: 10000;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: all 0.4s ease;
+    }
+
+    .header.scrolled {
       background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .logo { display: flex; align-items: center; text-decoration: none; }
-    /* Фикс логотипа: задаем размеры явно */
     .logo img { 
       height: 50px; 
       width: auto; 
@@ -39,82 +50,76 @@
       letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px;
     }
 
-    /* 3. АНИМАЦИИ APPLE */
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      will-change: opacity, transform;
-    }
-
-    .animate-on-scroll.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* 4. HERO ВИДЕО (с отступом под шапку) */
+    /* 3. HERO СЕКЦИЯ (Фикс 100svh от дерганий) */
     .hero {
       position: relative;
-      width: 100%; height: 75vh;
-      overflow: hidden; background: #000; margin-top: 75px;
+      width: 100%; 
+      height: 100svh; /* Занимает экран, игнорируя прыжки адресной строки */
+      overflow: hidden; 
+      background: #000;
     }
-    .hero video { width: 100%; height: 100%; object-fit: cover; }
+    .hero video { 
+      width: 100%; height: 100%; 
+      object-fit: cover; 
+    }
 
-    /* 5. ИСПРАВЛЕННЫЕ ТОВАРЫ (Без дерганий) */
+    /* 4. ТОВАРЫ */
     .wrapper { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+    
     .product { 
       display: flex; align-items: center; justify-content: space-between; 
-      gap: 60px; margin-bottom: 100px; 
+      gap: 60px; margin-bottom: 120px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 0.6s ease-out;
     }
+    .product.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* Слайдер с фиксированной пропорцией, чтобы контент не прыгал */
+    /* Слайдер с фиксированным местом */
     .slider {
-      width: 48%; 
+      width: 50%; 
       position: relative; 
-      aspect-ratio: 1 / 1.25; /* Жестко задаем место под фото */
-      overflow: hidden; 
+      aspect-ratio: 1 / 1.25; 
       background-color: #f7f7f7;
+      overflow: hidden;
     }
     .slider img {
       width: 100%; height: 100%; object-fit: cover;
       display: none; position: absolute; top: 0; left: 0;
     }
-    .slider img.active { display: block; animation: fade 0.6s ease-in-out; }
-    @keyframes fade { from { opacity: 0.2; } to { opacity: 1; } }
+    .slider img.active { display: block; }
 
     .product-info { width: 45%; }
-    .product-info h1 { font-size: 26px; margin-bottom: 5px; font-weight: 700; }
-    .product-info h2 { font-family: 'Courier New', monospace; font-size: 12px; color: #888; margin-bottom: 20px; }
+    .product-info h1 { font-size: 28px; margin-bottom: 8px; font-weight: 700; text-transform: uppercase; }
+    .product-info h2 { font-family: 'Courier New', monospace; font-size: 12px; color: #888; margin-bottom: 25px; }
     
-    .description { font-family: 'Courier New', monospace; line-height: 1.6; margin-bottom: 25px; font-size: 14px; }
-    .price { margin-bottom: 30px; }
-    .old-price { text-decoration: line-through; color: #aaa; margin-right: 10px; }
+    .description { font-size: 14px; line-height: 1.7; color: #333; margin-bottom: 30px; }
+    .price { margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+    .old-price { text-decoration: line-through; color: #aaa; font-size: 16px; }
     .new-price { font-size: 24px; font-weight: 700; }
     
     .btn {
-      display: inline-block; width: 100%; padding: 18px;
+      display: block; width: 100%; padding: 20px;
       background: #000; color: #fff; text-align: center; text-decoration: none;
-      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
       transition: 0.3s;
     }
 
-    /* 6. ФУТЕР */
+    /* 5. FOOTER (Полная версия) */
     .site-footer { background-color: #000; color: #fff; padding: 80px 20px 40px; }
     .footer-content { max-width: 1100px; margin: 0 auto; }
-    .footer-sections { display: flex; gap: 80px; margin-bottom: 50px; }
+    .footer-sections { display: flex; gap: 80px; margin-bottom: 60px; }
     .footer-column { display: flex; flex-direction: column; gap: 15px; }
-    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; opacity: 0.8; }
-    .footer-column a:hover { opacity: 1; }
-    .footer-copy { font-size: 10px; color: #444; letter-spacing: 1px; }
+    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; opacity: 0.8; }
+    .footer-copy { font-size: 10px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
 
-    /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+    /* МОБИЛЬНАЯ ВЕРСИЯ */
     @media (max-width: 768px) {
       .header { padding: 0 20px; height: 65px; }
-      .hero { margin-top: 65px; height: 60vh; }
-      .product { flex-direction: column; gap: 30px; margin-bottom: 70px; }
+      .logo img { height: 40px; }
+      .product { flex-direction: column; gap: 30px; margin-bottom: 80px; }
       .slider { width: 100%; }
-      .product-info { width: 100%; }
-      .product-info h1 { font-size: 22px; }
+      .product-info { width: 100%; text-align: left; }
+      .product-info h1 { font-size: 24px; }
       .footer-sections { flex-direction: column; gap: 40px; }
     }
   </style>
@@ -122,32 +127,33 @@
 <body>
 
   <header class="header">
-    <a href="index.html" class="logo">
-      <img src="imglogo.png" alt="SINLARANCE">
-    </a>
+    <div class="logo">
+      <a href="index.html">
+        <img src="imglogo.PNG" alt="SINLARANCE">
+      </a>
+    </div>
     <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn" target="_blank">ЗАКАЗАТЬ</a>
   </header>
 
   <section class="hero">
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline poster="poster.jpg">
       <source src="promo.mp4" type="video/mp4">
     </video>
   </section>
 
   <div class="wrapper">
     
-    <div class="product animate-on-scroll">
+    <div class="product">
       <div class="slider">
         <img src="zip1.jpg" class="active">
         <img src="zip2.jpg">
-        <img src="zip3.jpg">
       </div>
       <div class="product-info">
-        <h1>OLIVE GREEN ZIP HOODIE</h1>
+        <h1>OLIVE GREEN ZIP</h1>
         <h2>DROP "SINLARANCE CLUB"</h2>
         <div class="description">
           100% хлопок | Boxy cropped fit<br>
-          Раглан-крой обеспечивает свободу движений и мягкую посадку по плечам.
+          Плотная ткань, сохраняющая форму. Раглан крой для рукавов, что позволяет носить с более с большим комфортом.
         </div>
         <div class="price">
           <span class="old-price">25 900 ₸</span>
@@ -157,19 +163,17 @@
       </div>
     </div>
 
-    <div class="product animate-on-scroll">
+    <div class="product">
       <div class="slider">
         <img src="long1.jpg" class="active">
         <img src="long2.jpg">
-        <img src="long3.jpg">
       </div>
       <div class="product-info">
         <h1>BLACK OVERSIZE TEE</h1>
         <h2>DROP "SINLARANCE CLUB"</h2>
         <div class="description">
           Heavy cotton | Relaxed fit<br>
-          Премиальное качество материала.<br>
-          Плотная ткань, сохраняющая форму.
+          Премиальное качество материала. Воротник на пуговицах и полная вышивка делая дизайн долговечным и качественным.
         </div>
         <div class="price">
           <span class="old-price">15 000 ₸</span>
@@ -198,7 +202,17 @@
   </footer>
 
   <script>
-    // Слайдеры
+    // 1. Проявление шапки при скролле
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // 2. Слайдер картинок
     document.querySelectorAll('.slider').forEach((slider) => {
       const images = slider.querySelectorAll('img');
       if (images.length <= 1) return;
@@ -207,19 +221,19 @@
         images[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % images.length;
         images[currentIndex].classList.add('active');
-      }, 3500);
+      }, 3000);
     });
 
-    // Анимация при скролле
+    // 3. Плавное появление товаров при скролле (Intersection Observer)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    document.querySelectorAll('.product').forEach(el => observer.observe(el));
   </script>
 
 </body>
