@@ -5,121 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SINLARANCE CLUB</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    /* 1. БАЗОВЫЕ НАСТРОЙКИ (Убираем дерганье) */
     * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body { 
-      width: 100%; 
-      overflow-x: hidden; 
-      background: #fff; 
-      color: #000; 
-      /* Улучшаем плавность скролла на iOS */
-      -webkit-overflow-scrolling: touch; 
-    }
+    html, body { width: 100%; overflow-x: hidden; background: #fff; -webkit-overflow-scrolling: touch; }
 
-    /* 2. HEADER: Прозрачный -> Белый */
+    /* HEADER */
     .header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 75px;
+      position: fixed; top: 0; left: 0; right: 0; height: 90px;
       display: flex; align-items: center; justify-content: space-between; 
-      padding: 0 40px; z-index: 10000;
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: all 0.4s ease;
+      padding: 0 40px; z-index: 10000; background: transparent; transition: all 0.4s ease;
     }
-
     .header.scrolled {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05); height: 75px;
     }
 
-    .logo img { 
-      height: 50px; 
-      width: auto; 
-      display: block; 
-      object-fit: contain;
-    }
+    /* LOGO */
+    .logo img { height: 70px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
+    .header.scrolled .logo img { height: 50px; }
 
     .header-btn {
-      padding: 10px 22px; background: #000; color: #fff;
+      padding: 12px 24px; background: #000; color: #fff;
       text-decoration: none; font-size: 11px; font-weight: 700;
       letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px;
     }
 
-    /* 3. HERO СЕКЦИЯ (Фикс 100svh от дерганий) */
-    .hero {
-      position: relative;
-      width: 100%; 
-      height: 100svh; /* Занимает экран, игнорируя прыжки адресной строки */
-      overflow: hidden; 
-      background: #000;
-    }
-    .hero video { 
-      width: 100%; height: 100%; 
-      object-fit: cover; 
-    }
+    /* HERO */
+    .hero { width: 100%; height: 100svh; overflow: hidden; background: #000; }
+    .hero video { width: 100%; height: 100%; object-fit: cover; }
 
-    /* 4. ТОВАРЫ */
-    .wrapper { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
-    
-    .product { 
-      display: flex; align-items: center; justify-content: space-between; 
-      gap: 60px; margin-bottom: 120px;
-      opacity: 0; transform: translateY(20px);
-      transition: all 0.6s ease-out;
-    }
-    .product.is-visible { opacity: 1; transform: translateY(0); }
+    /* CONTENT WRAPPER */
+    .wrapper { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+    .product { display: flex; align-items: flex-start; justify-content: space-between; gap: 60px; margin-bottom: 150px; }
 
-    /* Слайдер с фиксированным местом */
+    /* SLIDER FIX (No jumping) */
     .slider {
-      width: 50%; 
-      position: relative; 
-      aspect-ratio: 1 / 1.25; 
-      background-color: #f7f7f7;
-      overflow: hidden;
+      width: 50%; position: relative; 
+      aspect-ratio: 3 / 4; 
+      background-color: #f7f7f7; overflow: hidden;
     }
     .slider img {
       width: 100%; height: 100%; object-fit: cover;
-      display: none; position: absolute; top: 0; left: 0;
+      position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.5s ease-in-out;
     }
-    .slider img.active { display: block; }
+    .slider img.active { opacity: 1; }
 
-    .product-info { width: 45%; }
-    .product-info h1 { font-size: 28px; margin-bottom: 8px; font-weight: 700; text-transform: uppercase; }
-    .product-info h2 { font-family: 'Courier New', monospace; font-size: 12px; color: #888; margin-bottom: 25px; }
+    .product-info { width: 42%; }
+    .product-info h1 { font-size: 32px; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; }
+    .product-info h2 { font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #888; margin-bottom: 30px; }
     
-    .description { font-size: 14px; line-height: 1.7; color: #333; margin-bottom: 30px; }
-    .price { margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
-    .old-price { text-decoration: line-through; color: #aaa; font-size: 16px; }
-    .new-price { font-size: 24px; font-weight: 700; }
+    /* COURIER FONT FOR DESCRIPTION */
+    .description { 
+      font-family: 'Courier New', Courier, monospace; 
+      font-size: 16px; 
+      line-height: 1.8; 
+      color: #000; 
+      margin-bottom: 40px; 
+    }
+    
+    .price { margin-bottom: 35px; display: flex; align-items: center; gap: 15px; }
+    .old-price { text-decoration: line-through; color: #aaa; font-size: 18px; font-family: 'Courier New', monospace; }
+    .new-price { font-size: 28px; font-weight: 700; }
     
     .btn {
-      display: block; width: 100%; padding: 20px;
+      display: block; width: 100%; padding: 22px;
       background: #000; color: #fff; text-align: center; text-decoration: none;
-      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      transition: 0.3s;
+      font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
     }
 
-    /* 5. FOOTER (Полная версия) */
-    .site-footer { background-color: #000; color: #fff; padding: 80px 20px 40px; }
+    /* FOOTER */
+    .site-footer { background: #000; color: #fff; padding: 100px 20px 50px; }
     .footer-content { max-width: 1100px; margin: 0 auto; }
-    .footer-sections { display: flex; gap: 80px; margin-bottom: 60px; }
-    .footer-column { display: flex; flex-direction: column; gap: 15px; }
-    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; opacity: 0.8; }
+    .footer-sections { display: flex; gap: 100px; margin-bottom: 80px; }
+    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; margin-bottom: 15px; display: block; opacity: 0.8; }
     .footer-copy { font-size: 10px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
 
-    /* МОБИЛЬНАЯ ВЕРСИЯ */
     @media (max-width: 768px) {
-      .header { padding: 0 20px; height: 65px; }
-      .logo img { height: 40px; }
-      .product { flex-direction: column; gap: 30px; margin-bottom: 80px; }
+      .header { padding: 0 20px; height: 80px; }
+      .logo img { height: 55px; }
+      .product { flex-direction: column; gap: 30px; margin-bottom: 100px; }
       .slider { width: 100%; }
-      .product-info { width: 100%; text-align: left; }
-      .product-info h1 { font-size: 24px; }
+      .product-info { width: 100%; }
       .footer-sections { flex-direction: column; gap: 40px; }
     }
   </style>
@@ -127,18 +94,12 @@
 <body>
 
   <header class="header">
-    <div class="logo">
-      <a href="index.html">
-        <img src="imglogo.PNG" alt="SINLARANCE">
-      </a>
-    </div>
+    <div class="logo"><a href="index.html"><img src="imglogo.PNG" alt="SINLARANCE"></a></div>
     <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn" target="_blank">ЗАКАЗАТЬ</a>
   </header>
 
   <section class="hero">
-    <video autoplay muted loop playsinline poster="poster.jpg">
-      <source src="promo.mp4" type="video/mp4">
-    </video>
+    <video autoplay muted loop playsinline><source src="promo.mp4" type="video/mp4"></video>
   </section>
 
   <div class="wrapper">
@@ -152,8 +113,9 @@
         <h1>OLIVE GREEN ZIP</h1>
         <h2>DROP "SINLARANCE CLUB"</h2>
         <div class="description">
-          100% хлопок | Boxy cropped fit<br>
-          Плотная ткань, сохраняющая форму. Раглан крой для рукавов, что позволяет носить с более с большим комфортом.
+          100% PREMIUM COTTON<br>
+          BOXY CROPPED FIT<br>
+          РАГЛАН-КРОЙ ОБЕСПЕЧИВАЕТ СВОБОДУ ДВИЖЕНИЙ И МЯГКУЮ ПОСАДКУ ПО ПЛЕЧАМ.
         </div>
         <div class="price">
           <span class="old-price">25 900 ₸</span>
@@ -172,12 +134,34 @@
         <h1>BLACK OVERSIZE TEE</h1>
         <h2>DROP "SINLARANCE CLUB"</h2>
         <div class="description">
-          Heavy cotton | Relaxed fit<br>
-          Премиальное качество материала. Воротник на пуговицах и полная вышивка делая дизайн долговечным и качественным.
+          HEAVY COTTON | RELAXED FIT<br>
+          ПРЕМИАЛЬНОЕ КАЧЕСТВО МАТЕРИАЛА.<br>
+          ПЛОТНАЯ ТКАНЬ, СОХРАНЯЮЩАЯ ФОРМУ И ЦВЕТ ПОСЛЕ СТИРОК.
         </div>
         <div class="price">
           <span class="old-price">15 000 ₸</span>
           <span class="new-price">12 000 ₸</span>
+        </div>
+        <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917" target="_blank">НАПИСАТЬ В WHATSAPP</a>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="slider">
+        <img src="black1.jpg" class="active">
+        <img src="black2.jpg">
+      </div>
+      <div class="product-info">
+        <h1>GRAPHITE HOODIE</h1>
+        <h2>DROP "SINLARANCE CLUB"</h2>
+        <div class="description">
+          450 GSM HEAVYWEIGHT FLEECE<br>
+          OVERSIZED COMFORTABLE FIT<br>
+          ГЛУБОКИЙ КАПЮШОН И ОБЪЕМНЫЙ КАРМАН-КЕНГУРУ.
+        </div>
+        <div class="price">
+          <span class="old-price">28 000 ₸</span>
+          <span class="new-price">24 500 ₸</span>
         </div>
         <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917" target="_blank">НАПИСАТЬ В WHATSAPP</a>
       </div>
@@ -202,39 +186,22 @@
   </footer>
 
   <script>
-    // 1. Проявление шапки при скролле
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', () => {
       const header = document.querySelector('.header');
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
+      window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
+    });
+
+    document.querySelectorAll('.slider').forEach(slider => {
+      const imgs = slider.querySelectorAll('img');
+      let i = 0;
+      if(imgs.length > 1) {
+        setInterval(() => {
+          imgs[i].classList.remove('active');
+          i = (i + 1) % imgs.length;
+          imgs[i].classList.add('active');
+        }, 3000);
       }
     });
-
-    // 2. Слайдер картинок
-    document.querySelectorAll('.slider').forEach((slider) => {
-      const images = slider.querySelectorAll('img');
-      if (images.length <= 1) return;
-      let currentIndex = 0;
-      setInterval(() => {
-        images[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % images.length;
-        images[currentIndex].classList.add('active');
-      }, 3000);
-    });
-
-    // 3. Плавное появление товаров при скролле (Intersection Observer)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.product').forEach(el => observer.observe(el));
   </script>
-
 </body>
 </html>
