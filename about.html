@@ -46,20 +46,20 @@
     /* На мобильных — естественное вертикальное расположение (как на скрине "Как должна быть") */
     @media (max-width: 768px) {
       .about-hero {
+        /* 1179 / 1324 ≈ 0.89. Это создает идеальный размер без лишней длины */
+        aspect-ratio: 1179 / 1324; 
         height: auto;
-        /* Соотношение сторон 3:4.5 — идеальный вертикальный портрет */
-        aspect-ratio: 3 / 4.5; 
       }
+      .header { padding: 0 20px; }
     }
 
     .about-hero img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Края обрежутся равномерно */
-      object-position: center top; /* Всегда держим лицо в кадре */
+      object-fit: cover; /* Заполняет блок */
+      object-position: center center; /* Центрирует картинку */
       display: block;
     }
-
     /* CONTENT */
     .about-content { max-width: 800px; margin: 60px auto 100px; padding: 0 25px; text-align: center; }
     .about-title { 
@@ -100,7 +100,7 @@
   </div>
 
   <div class="about-content">
-    <div class="about-title">About the brand</div>
+    <div class="about-title">О бренде</div>
     <div class="about-text">
       <p>Sinlarance – это казахстанский streetwear бренд одежды основанный в 2025 году.</p>
       <p>Наша миссия внести вклад в общество и уличную культуру, создавать качественные и стильные айтемы дополняя жизнь современного человека.</p>
