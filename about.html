@@ -9,18 +9,19 @@
     * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { background: #fff; color: #000; display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* HEADER: Khaite Style */
+    /* HEADER: Фикс логотипа и размера */
     .header {
       position: fixed; top: 0; left: 0; right: 0; height: 90px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; z-index: 10000; background: transparent; transition: all 0.4s ease;
     }
     .header.scrolled {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(0, 0, 0, 0.05); height: 75px;
     }
-    .logo img { height: 70px; width: auto; transition: height 0.4s ease; }
+    /* Увеличили логотип до 70px как ты просил */
+    .logo img { height: 70px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
     .header.scrolled .logo img { height: 50px; }
 
     .header-btn {
@@ -29,62 +30,56 @@
       letter-spacing: 1.5px; text-transform: uppercase;
     }
 
-    /* ABOUT HERO: Логика Khaite */
+    /* ABOUT HERO: Логика Khaite без обрезки лица */
     .about-hero {
       position: relative;
       width: 100%;
-      background-color: #f6f6f6;
+      background-color: #fff;
       display: block;
     }
 
-    /* ПК: Высота 100% экрана */
+    /* На ПК — во весь экран */
     @media (min-width: 769px) {
-      .about-hero {
-        height: 100vh;
-      }
+      .about-hero { height: 100vh; }
     }
 
-    /* МОБИЛЬНЫЕ: Пропорциональный контейнер (как у Khaite) */
+    /* На мобильных — естественное вертикальное расположение (как на скрине "Как должна быть") */
     @media (max-width: 768px) {
       .about-hero {
         height: auto;
-        aspect-ratio: 0.75 / 1; /* Вертикальный формат 3:4 */
+        /* Соотношение сторон 3:4.5 — идеальный вертикальный портрет */
+        aspect-ratio: 3 / 4.5; 
       }
     }
 
     .about-hero img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; /* Заполнение контейнера без деформации */
-      object-position: center top; /* Фокус на верхней части фото */
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Края обрежутся равномерно */
+      object-position: center top; /* Всегда держим лицо в кадре */
+      display: block;
     }
 
     /* CONTENT */
-    .about-content { max-width: 800px; margin: 100px auto; padding: 0 25px; text-align: center; }
-    
+    .about-content { max-width: 800px; margin: 60px auto 100px; padding: 0 25px; text-align: center; }
     .about-title { 
       font-family: 'Courier New', Courier, monospace; 
-      font-size: 13px; letter-spacing: 4px; text-transform: uppercase; 
-      margin-bottom: 40px; color: #888; 
+      font-size: 13px; letter-spacing: 5px; text-transform: uppercase; 
+      margin-bottom: 40px; color: #000; font-weight: bold;
     }
+    .about-text p { font-size: 18px; line-height: 1.8; margin-bottom: 30px; color: #000; }
 
-    .about-text p { 
-      font-size: 18px; line-height: 1.8; margin-bottom: 30px; color: #000; 
-    }
-
-    /* FOOTER */
+    /* FOOTER (Полная версия) */
     .site-footer { background-color: #000; color: #fff; padding: 100px 20px 50px; margin-top: auto; }
     .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
     .footer-sections { display: flex; gap: 80px; margin-bottom: 60px; }
     .footer-column { display: flex; flex-direction: column; gap: 15px; }
-    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; opacity: 0.8; }
+    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; }
     .footer-copy { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 2px; }
 
     @media (max-width: 768px) {
       .header { padding: 0 20px; height: 80px; }
       .logo img { height: 55px; }
-      .about-content { margin: 60px auto; }
       .footer-sections { flex-direction: column; gap: 40px; }
     }
   </style>
@@ -93,7 +88,9 @@
 
   <header class="header">
     <div class="logo">
-      <a href="index.html"><img src="imglogo.PNG" alt="SINLARANCE"></a>
+      <a href="index.html">
+        <img src="imglogo.PNG" alt="SINLARANCE">
+      </a>
     </div>
     <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn" target="_blank">ЗАКАЗАТЬ</a>
   </header>
