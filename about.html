@@ -6,54 +6,110 @@
   <title>ABOUT - SINLARANCE</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-    body { background: #fff; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+    /* ОБЩИЕ СТИЛИ */
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: #fff; color: #000; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* HEADER */
+    /* HEADER: Прозрачный в начале, увеличили лого */
     .header {
       position: fixed; top: 0; left: 0; right: 0; height: 90px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; z-index: 10000; background: transparent; transition: all 0.4s ease;
     }
-    .header.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); height: 75px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-    .logo img { height: 70px; width: auto; transition: height 0.4s ease; }
+    .header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05); height: 75px;
+    }
+
+    /* УВЕЛИЧЕННЫЙ ЛОГОТИП */
+    .logo img { height: 70px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
     .header.scrolled .logo img { height: 50px; }
-    .header-btn { padding: 12px 24px; background: #000; color: #fff; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; }
 
-    /* О НАС - ФОТО (Khaite Style) */
-    .about-hero { width: 100%; height: 100svh; background: #f0f0f0; }
-    .about-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .header-btn {
+      padding: 12px 24px; background: #000; color: #fff;
+      text-decoration: none; font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; border-radius: 2px;
+    }
 
+    /* ФИКС ФОТО: На весь экран, без дерганий */
+    .about-hero { 
+      width: 100%; 
+      height: 100svh; /* Фикс для мобильных браузеров */
+      background: #000; 
+      overflow: hidden;
+    }
+    .about-hero img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      object-position: center; /* Чтобы лицо/объект были по центру */
+      display: block;
+    }
+
+    /* КОНТЕНТ */
     .about-content { max-width: 800px; margin: 100px auto; padding: 0 25px; text-align: center; }
-    .about-title { font-size: 14px; font-style: italic; font-family: 'Times New Roman', serif; margin-bottom: 40px; color: #000; }
-    .about-text p { font-size: 18px; line-height: 1.8; margin-bottom: 30px; color: #000; }
+    
+    .about-title { 
+      font-family: 'Courier New', Courier, monospace; 
+      font-size: 14px; 
+      letter-spacing: 4px; 
+      text-transform: uppercase; 
+      margin-bottom: 50px; 
+      color: #888; 
+    }
 
-    /* FOOTER */
-    .site-footer { background: #000; color: #fff; padding: 100px 20px 50px; }
-    .footer-content { max-width: 1100px; margin: 0 auto; }
-    .footer-sections { display: flex; gap: 100px; margin-bottom: 60px; }
-    .footer-column a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 600; margin-bottom: 15px; display: block; }
-    .footer-copy { font-size: 10px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
+    .about-text p { 
+      font-size: 18px; 
+      line-height: 1.8; 
+      margin-bottom: 35px; 
+      color: #000; 
+      font-weight: 400; 
+    }
 
+    /* ПОЛНЫЙ ФУТЕР (Как в index.html) */
+    .site-footer { background-color: #000; color: #fff; padding: 100px 20px 50px; width: 100%; margin-top: auto; }
+    .footer-content { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
+    .footer-sections { display: flex; gap: 80px; margin-bottom: 60px; }
+    .footer-column { display: flex; flex-direction: column; gap: 15px; }
+    .footer-column a { 
+      color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; 
+      letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.8; transition: 0.3s; 
+    }
+    .footer-column a:hover { opacity: 0.5; }
+    .footer-copy { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 2px; }
+
+    /* МОБИЛЬНАЯ АДАПТАЦИЯ */
     @media (max-width: 768px) {
-      .header { padding: 0 20px; }
+      .header { padding: 0 20px; height: 80px; }
       .logo img { height: 55px; }
-      .about-content { margin: 60px auto; }
+      .about-hero { height: 100svh; }
+      .about-content { margin: 60px auto 100px; }
+      .about-text p { font-size: 16px; }
+      .footer-sections { flex-direction: column; gap: 40px; }
     }
   </style>
 </head>
 <body>
+
   <header class="header">
-    <div class="logo"><a href="index.html"><img src="imglogo.PNG" alt="SINLARANCE"></a></div>
-    <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn">ЗАКАЗАТЬ</a>
+    <div class="logo">
+      <a href="index.html">
+        <img src="imglogo.PNG" alt="SINLARANCE">
+      </a>
+    </div>
+    <a href="https://api.whatsapp.com/send?phone=77770554917" class="header-btn" target="_blank">ЗАКАЗАТЬ</a>
   </header>
 
-  <div class="about-hero"><img src="abou.jpg" alt="About"></div>
+  <div class="about-hero">
+    <img src="abou.jpg" alt="About Brand Image">
+  </div>
 
   <div class="about-content">
-    <div class="about-title">About</div>
+    <div class="about-title">О бренде</div>
     <div class="about-text">
       <p>Sinlarance – это казахстанский streetwear бренд одежды основанный в 2025 году.</p>
+      <p>Сейчас мы постепенно стараемся расширяться и заполнять нишу делая ее разнообразнее, интереснее и уникальнее.</p>
       <p>Наша миссия внести вклад в общество и уличную культуру, создавать качественные и стильные айтемы дополняя жизнь современного человека.</p>
     </div>
   </div>
@@ -61,18 +117,30 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-sections">
-        <div class="footer-column"><a href="faq.html">FAQ</a><a href="about.html">О НАС</a></div>
-        <div class="footer-column"><a href="#">INSTAGRAM</a><a href="#">TIKTOK</a></div>
+        <div class="footer-column">
+          <a href="faq.html">FAQ</a>
+          <a href="about.html">О НАС</a>
+        </div>
+        <div class="footer-column">
+          <a href="https://instagram.com/" target="_blank">INSTAGRAM</a>
+          <a href="https://tiktok.com/" target="_blank">TIKTOK</a>
+        </div>
       </div>
       <div class="footer-copy">© 2026, SINLARANCE POWERED BY HEADCHACE</div>
     </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', () => {
+    // Плавное появление шапки при прокрутке
+    window.addEventListener('scroll', function() {
       const header = document.querySelector('.header');
-      window.scrollY > 80 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
+      if (window.scrollY > 80) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     });
   </script>
+
 </body>
 </html>
