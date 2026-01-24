@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
   <title>FAQ - SINLARANCE</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -68,6 +69,33 @@
       .faq-container { margin-top: 120px; }
       .footer-sections { flex-direction: column; gap: 40px; }
     }
+/* Красим самый нижний слой в черный */
+html { 
+  background-color: #000; 
+}
+
+/* Красим тело в белый, чтобы контент был на белом фоне */
+body { 
+  background-color: #fff; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Белый фон для всех секций до футера */
+.hero, .wrapper { 
+  background-color: #fff; 
+  position: relative;
+  z-index: 1;
+}
+
+/* Футер просто черный, без гигантских отступов */
+.site-footer { 
+  background: #000; 
+  color: #fff; 
+  padding: 100px 20px 50px; 
+  margin-top: auto; /* Прижимает футер к низу, если контента мало */
+}
   </style>
 </head>
 <body>

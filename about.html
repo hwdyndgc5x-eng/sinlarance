@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
   <title>ABOUT - SINLARANCE</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -21,8 +22,8 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.05); height: 75px;
     }
     /* Увеличили логотип до 70px как ты просил */
-    .logo img { height: 110px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
-    .header.scrolled .logo img { height: 90px; }
+    .logo img { height: 90px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
+    .header.scrolled .logo img { height: 80px; }
 
     .header-btn {
       padding: 12px 24px; background: #000; color: #fff;
@@ -44,21 +45,29 @@
     }
 
     /* На мобильных — естественное вертикальное расположение (как на скрине "Как должна быть") */
-   .about-hero img {
-  width: 100%;
-  height: 100%;
-  /* 'cover' может слишком приближать, 'contain' покажет всё фото целиком */
-  /* Если хочешь оставить заполнение, но сдвинуть — оставь cover */
-  object-fit: cover; 
-  
-  /* Сдвигаем фокус: 20% по горизонтали (левее) и center по вертикали */
-  /* Это "отдалит" объект от правого края и прижмет к левому */
-  object-position: 20% center; 
-  
-  display: block;
-  transition: all 0.4s ease;
-}
+  /* МОБИЛЬНАЯ ВЕРСИЯ (Khaite Style) */
+  @media (max-width: 768px) {
+    .about-hero {
+      /* Соотношение как у Khaite */
+      aspect-ratio: 1179 / 1324; 
+      height: auto;
+    }
 
+    .about-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      
+      /* 1. СДВИГАЕМ ЛЕВЕЕ: 0% прижмет картинку к левому краю */
+      object-position: 0% center; 
+      
+      /* 2. ОТДАЛЯЕМ: scale меньше 1 уменьшает картинку внутри контейнера */
+      /* Если нужно еще сильнее отдалить, поставь 0.8 */
+      transform: scale(1.0); 
+      
+      display: block;
+    }
+  }
 @media (max-width: 768px) {
   .about-hero img {
     /* На мобильных часто лучше работает 15-20% для акцента на модели */
@@ -87,6 +96,33 @@
       .logo img { height: 55px; }
       .footer-sections { flex-direction: column; gap: 40px; }
     }
+    /* Красим самый нижний слой в черный */
+html { 
+  background-color: #000; 
+}
+
+/* Красим тело в белый, чтобы контент был на белом фоне */
+body { 
+  background-color: #fff; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Белый фон для всех секций до футера */
+.hero, .wrapper { 
+  background-color: #fff; 
+  position: relative;
+  z-index: 1;
+}
+
+/* Футер просто черный, без гигантских отступов */
+.site-footer { 
+  background: #000; 
+  color: #fff; 
+  padding: 100px 20px 50px; 
+  margin-top: auto; /* Прижимает футер к низу, если контента мало */
+}
   </style>
 </head>
 <body>

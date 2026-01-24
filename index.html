@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SINLARANCE CLUB</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>SINLARANCE CLUB | Магазин одежды</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body { width: 100%; overflow-x: hidden; background: #fff; -webkit-overflow-scrolling: touch; }
+    html, body { width: 100%; overflow-x: hidden; background: #fff; -webkit-overflow-scrolling: touch; color: #000; }
 
     /* HEADER */
     .header {
@@ -22,8 +23,8 @@
     }
 
     /* LOGO */
-    .logo img { height: 70px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
-    .header.scrolled .logo img { height: 50px; }
+    .logo img { height: 110px; width: auto; display: block; object-fit: contain; transition: height 0.4s ease; }
+    .header.scrolled .logo img { height: 90px; }
 
     .header-btn {
       padding: 12px 24px; background: #000; color: #fff;
@@ -39,7 +40,7 @@
     .wrapper { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
     .product { display: flex; align-items: flex-start; justify-content: space-between; gap: 60px; margin-bottom: 150px; }
 
-    /* SLIDER FIX (No jumping) */
+    /* SLIDER FIX */
     .slider {
       width: 50%; position: relative; 
       aspect-ratio: 3 / 4; 
@@ -47,21 +48,18 @@
     }
     .slider img {
       width: 100%; height: 100%; object-fit: cover;
-      position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.5s ease-in-out;
+      position: absolute; top: 0; left: 0; opacity: 0; 
+      z-index: 0; transition: opacity 0.8s ease-in-out;
     }
-    .slider img.active { opacity: 1; }
+    .slider img.active { opacity: 1; z-index: 1; }
 
     .product-info { width: 42%; }
-    .product-info h1 { font-size: 32px; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; }
-    .product-info h2 { font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #888; margin-bottom: 30px; }
+    .product-info h2 { font-size: 32px; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; }
+    .product-info .subtitle { font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #888; margin-bottom: 30px; }
     
-    /* COURIER FONT FOR DESCRIPTION */
     .description { 
       font-family: 'Courier New', Courier, monospace; 
-      font-size: 16px; 
-      line-height: 1.8; 
-      color: #000; 
-      margin-bottom: 40px; 
+      font-size: 16px; line-height: 1.8; color: #000; margin-bottom: 40px; 
     }
     
     .price { margin-bottom: 35px; display: flex; align-items: center; gap: 15px; }
@@ -72,7 +70,9 @@
       display: block; width: 100%; padding: 22px;
       background: #000; color: #fff; text-align: center; text-decoration: none;
       font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      transition: opacity 0.3s;
     }
+    .btn:hover { opacity: 0.8; }
 
     /* FOOTER */
     .site-footer { background: #000; color: #fff; padding: 100px 20px 50px; }
@@ -83,12 +83,35 @@
 
     @media (max-width: 768px) {
       .header { padding: 0 20px; height: 80px; }
-      .logo img { height: 55px; }
+      .logo img { height: 70px; } /* Увеличил чуть-чуть для читаемости на мобилках */
       .product { flex-direction: column; gap: 30px; margin-bottom: 100px; }
       .slider { width: 100%; }
       .product-info { width: 100%; }
       .footer-sections { flex-direction: column; gap: 40px; }
-    }
+    } 
+    /* Начальное состояние карточек (невидимы) */
+.product {
+  opacity: 0;
+  transform: translateY(50px) scale(0.98); /* Смещаем вниз и чуть уменьшаем */
+  transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), 
+              transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: transform, opacity;
+}
+
+/* Состояние при появлении (активируется через JS) */
+.product.reveal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Эффект для изображений внутри слайдера как в Apple Store */
+.slider {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product:hover .slider {
+  transform: scale(1.02); /* Легкое увеличение при наведении */
+}
   </style>
 </head>
 <body>
@@ -99,27 +122,29 @@
   </header>
 
   <section class="hero">
-    <video autoplay muted loop playsinline><source src="promo.mp4" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="video-preview.jpg">
+      <source src="promo.mp4" type="video/mp4">
+    </video>
   </section>
 
   <div class="wrapper">
     
     <div class="product">
       <div class="slider">
-        <img src="zip1.jpg" class="active">
-        <img src="zip2.jpg">
+        <img src="zip1.jpg" class="active" alt="Olive Green Zip Front">
+        <img src="zip2.jpg" alt="Olive Green Zip Back">
+        <img src="zip3.jpg" alt="Olive Green Zip Detail">
       </div>
       <div class="product-info">
-        <h1>OLIVE GREEN ZIP</h1>
-        <h2>DROP "SINLARANCE CLUB"</h2>
+        <h2>OLIVE GREEN ZIP UP</h2>
+        <div class="subtitle">DROP "SINLARANCE CLUB"</div>
         <div class="description">
-          100% PREMIUM COTTON<br>
-          BOXY CROPPED FIT<br>
-          РАГЛАН-КРОЙ ОБЕСПЕЧИВАЕТ СВОБОДУ ДВИЖЕНИЙ И МЯГКУЮ ПОСАДКУ ПО ПЛЕЧАМ.
+          * 485 GSM COTTON<br>
+          * BOXY CROPPED FIT<br>
+          Раглан-крой обеспечивает свободу движения и комфортную носку. Качественная белая вышивка, надежная фурнитура, глубокий капюшон.
         </div>
         <div class="price">
-          <span class="old-price">25 900 ₸</span>
-          <span class="new-price">20 830 ₸</span>
+          <span class="new-price">25 900 ₸</span>
         </div>
         <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917" target="_blank">НАПИСАТЬ В WHATSAPP</a>
       </div>
@@ -127,20 +152,21 @@
 
     <div class="product">
       <div class="slider">
-        <img src="long1.jpg" class="active">
-        <img src="long2.jpg">
+        <img src="long1.jpg" class="active" alt="Black Oversize Tee Front">
+        <img src="long2.jpg" alt="Black Oversize Tee Back">
+        <img src="long3.jpg" alt="Black Oversize Tee Side">
       </div>
       <div class="product-info">
-        <h1>BLACK OVERSIZE TEE</h1>
-        <h2>DROP "SINLARANCE CLUB"</h2>
+        <h2>BLACK RAGBY SHIRT</h2>
+        <div class="subtitle">DROP "SINLARANCE CLUB"</div>
         <div class="description">
-          HEAVY COTTON | RELAXED FIT<br>
-          ПРЕМИАЛЬНОЕ КАЧЕСТВО МАТЕРИАЛА.<br>
-          ПЛОТНАЯ ТКАНЬ, СОХРАНЯЮЩАЯ ФОРМУ И ЦВЕТ ПОСЛЕ СТИРОК.
+          * ОТКИДНОЙ ВОРОТНИК<br>
+          * RELAXED FIT<br>
+          Плотный хлопок и свободный крой делают его незаменимой базой для тех, кто ценит комфорт без компромиссов в стиле.<br>
+          
         </div>
         <div class="price">
-          <span class="old-price">15 000 ₸</span>
-          <span class="new-price">12 000 ₸</span>
+          <span class="new-price">27 000 ₸</span>
         </div>
         <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917" target="_blank">НАПИСАТЬ В WHATSAPP</a>
       </div>
@@ -148,19 +174,20 @@
 
     <div class="product">
       <div class="slider">
-        <img src="black1.jpg" class="active">
-        <img src="black2.jpg">
+        <img src="black1.jpg" class="active" alt="Graphite Hoodie Front">
+        <img src="black2.jpg" alt="Graphite Hoodie Back">
+        <img src="black3.jpg" alt="Graphite Hoodie Detail">
       </div>
       <div class="product-info">
-        <h1>GRAPHITE HOODIE</h1>
-        <h2>DROP "SINLARANCE CLUB"</h2>
+        <h2>GRAPHITE BAGGY SWEATPANTS</h2>
+        <div class="subtitle">DROP "SINLARANCE CLUB"</div>
         <div class="description">
-          450 GSM HEAVYWEIGHT FLEECE<br>
-          OVERSIZED COMFORTABLE FIT<br>
-          ГЛУБОКИЙ КАПЮШОН И ОБЪЕМНЫЙ КАРМАН-КЕНГУРУ.
+          * 450 GSM HEAVYWEIGHT FLEECE<br>
+          * OVERSIZED COMFORTABLE FIT<br>
+          Широкие спортивные брюки «Black Wide». Базовая модель в стиле минимализма.
+          Свободный фасон не сковывает движения и создает расслабленный повседневный образ.
         </div>
         <div class="price">
-          <span class="old-price">28 000 ₸</span>
           <span class="new-price">24 500 ₸</span>
         </div>
         <a class="btn" href="https://api.whatsapp.com/send?phone=77770554917" target="_blank">НАПИСАТЬ В WHATSAPP</a>
@@ -186,11 +213,13 @@
   </footer>
 
   <script>
+    // Header Scroll Effect
     window.addEventListener('scroll', () => {
       const header = document.querySelector('.header');
       window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
     });
 
+    // Simple Auto-Slider
     document.querySelectorAll('.slider').forEach(slider => {
       const imgs = slider.querySelectorAll('img');
       let i = 0;
@@ -199,9 +228,31 @@
           imgs[i].classList.remove('active');
           i = (i + 1) % imgs.length;
           imgs[i].classList.add('active');
-        }, 3000);
+        }, 3500); // 3.5 секунды для комфортного просмотра
       }
     });
+    // Анимация появления карточек (Apple-style reveal)
+const revealOnScroll = () => {
+  const observerOptions = {
+    threshold: 0.15 // Анимация начнется, когда 15% карточки будет в поле зрения
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.product').forEach((product) => {
+    observer.observe(product);
+  });
+};
+
+// Запускаем функцию
+revealOnScroll();
   </script>
+
 </body>
 </html>
